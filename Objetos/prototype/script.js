@@ -1,80 +1,108 @@
-// const Dom = {
-//   seletor: 'li',
-//   element() { // é uma função, somente abreviamos
-//     return document.querySelector(this.seletor);
-//   },
-//   ativo() {
-//     this.element().classList.add('ativo');
-//   },
+// /**
+//  *A propriedade prototype é um objeto adicionado a 
+//  uma função quando a mesma é criada.
+//  */
+
+
+// function Pessoa(nome, idade) {
+//   this.nome = nome;
+//   this.idade = idade;
 // }
+// const andre = new Pessoa('André', 28);
 
-// Dom.ativo(); // adiciona ativo ao li
-// Dom.seletor = 'ul';
-// Dom.ativo(); // adiciona ativo ao ul
+// console.log(Pessoa.prototype); // retorna o objeto
+// console.log(andre.prototype); // undefined
 
-//transformando em uma função construtora
 
-// function Dom() {
-//   this.seletor = 'li';
-//   const element = document.querySelector(this.seletor);
-//   this.ativo = function() {
-//     element.classList.add('ativo');
-//   };
+// /* É possível adicionar novas propriedades e 
+//  métodos ao objeto prototype.  */
+
+// Pessoa.prototype.andar = function() {
+//   return this.nome + ' andou';
 // }
+// Pessoa.prototype.nadar = function() {
+//   return this.nome + ' nadou';
+// }
+// //console.log(Pessoa.prototype); // retorna o objeto
 
-// const lista = new Dom();
-// lista.seletor = 'ul';
-// lista.ativo();
 
-// const lastLi = new Dom();
-// lastLi.seletor = 'li:last-child';
-// lastLi.ativo();
+// // aula 2
 
-// Transforme o objeto abaixo em uma Constructor Function
-function Pessoa(nome, idade) {
-  nome = 'Nome pessoa',
-  idade = 0,
-  this.andar = function() {
-    console.log(this.nome + ' andou');
-  }
+// const pais = 'brasil';
+// const cidade = new String('Rio');
+
+// const listaAnimais = ['Cachorro', 'Gato', 'Cavalo'];
+
+// const lista = document.querySelectorAll('li');
+
+// // transforma em um array
+
+// const listaArray = Array.prototype.slice.call(lista);
+
+// // um metodo atual e direto do objeto é o from
+
+// const listaArray2 = Array.from(lista);
+
+// /**
+//  * Nos objetos nativos existem métodos linkados diretamente 
+//  * ao Objeto e outros linkados ao protótipo.
+//  */
+
+// // Retorna uma lista com os métodos / propriedades
+// Object.getOwnPropertyNames(Array);
+// Object.getOwnPropertyNames(Array.prototype);
+
+
+// Aula 2
+
+// Método do Objeto vs Protótipo
+
+// Array.prototype.slice.call(lista);
+// Array.from(lista);
+
+// // Retorna uma lista com os métodos / propriedades
+// Object.getOwnPropertyNames(Array);
+// Object.getOwnPropertyNames(Array.prototype);
+
+/* uma forma de saber o nome do construtor: 
+dado.constructor.name, retorna o nome do construtor;*/
+
+// Crie uma função construtora de Pessoas
+// Deve conter nome, sobrenome e idade
+// Crie um método no protótipo que retorne
+// o nome completo da pessoa
+
+function Pessoa(nome, sobrenome, idade) {
+  this.nome = nome;
+  this.idade = idade;
+  this.sobrenome = sobrenome;
 }
 
-// Crie 3 pessoas, João - 20 anos,
-// Maria - 25 anos, Bruno - 15 anos
+Pessoa.prototype.nomeCompleto = function() {
+  return `${this.nome} ${this.sobrenome}`;
+};
 
-const pessoa1 = new Pessoa('João', 20);
-const pessoa2 = new Pessoa('Maria', 25);
-const pessoa3 = new Pessoa('Bruno', 15);
+const primeiraPessoa = new Pessoa('Júlia', 'Silva', 22);
+console.log(primeiraPessoa.nomeCompleto());
 
-// Crie uma Constructor Function (Dom) para manipulação
-// de listas de elementos do dom. Deve conter as seguintes
-// propriedades e métodos:
-//
-// elements, retorna NodeList com os elementos selecionados
-// addClass(classe), adiciona a classe a todos os elementos
-// removeClass(classe), remove a classe a todos os elementos
+// Liste os métodos acessados por 
+// dados criados com NodeList,
+// HTMLCollection, Document
+Object.getOwnPropertyNames(NodeList.prototype);
+Object.getOwnPropertyNames(HTMLCollection.prototype);
+Object.getOwnPropertyNames(Document.prototype);
 
-function Dom(seletor){
-  const elementList = document.querySelectorAll(seletor);
 
-  this.elementList = elementList;
+// Liste os construtores dos dados abaixo
+const li = document.querySelector('li');
 
-  this.addClass = function(classe){
-    elementList.forEach((element) => {
-      element.classList.add(classe);
-    })
-  }
-  this.removeClass = function(classe){
-    elementList.forEach((element) => {
-      element.classList.remove(classe);
-    })
-  }
-}
+li; // HTMLElement
+li.click; // function
+li.innerText; // string
+li.value; // number
+li.hidden; // boolean
+li.offsetLeft; //number
+li.click(); // undefined
 
-const listaItens = new Dom('li');
-const ul = new Dom('ul');
-
-listaItens.addClass('ativar');
-ul.addClass('ativar-ul');
-
-ul.removeClass('ativar-ul')
+// Qual o construtor do dado abaixo:
+li.hidden.constructor.name; // string
