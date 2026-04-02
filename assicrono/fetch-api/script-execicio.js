@@ -26,8 +26,35 @@ function buscaCep(cep){
 // retorne no DOM o valor de compra da bitcoin and reais.
 // atualize este valor a cada 30s
 
+const btcPrice = document.querySelector('.btc');
 
+function fetchBtc(){
+    fetch('https://blockchain.info/ticker')
+    .then(response => response.json())
+    .then(btcJson => {
+        console.log(btcJson);
+        
+        document.querySelector('.btc').innerText = btcJson.BRL.buy;
+    })
+}
+
+setInterval(fetchBtc, 5000);
+
+fetchBtc();
 
 // Utilizando a API https://api.chucknorris.io/jokes/random
 // retorne uma piada randomica do chucknorris, toda vez que
 // clicar em próxima
+const btnPiada = document.querySelector('.proxima');
+const pPiada = document.querySelector('.piada');
+
+function puxarPiada(){
+    fetch('https://api.chucknorris.io/jokes/random')
+    .then( response => response.json())
+    .then(piada => {
+        pPiada.innerText = piada.value;
+    })
+}
+
+btnPiada.addEventListener('click', puxarPiada);
+puxarPiada();
