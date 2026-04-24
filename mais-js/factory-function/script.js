@@ -14,3 +14,18 @@ function createObjet(text){
     return obj;
 }
 
+function createButton(text) {
+  function element() {
+    const buttonElement = document.createElement('button');
+    buttonElement.innerText = text;
+    return buttonElement;
+  }
+  // Podemos  impedir que os métodos e propriedades sejam modificados com Object.freeze()
+  return Object.freeze({
+    element: element,
+    text: text,
+  })
+}
+
+const comprarBtn = createButton('Comprar');
+
